@@ -7,19 +7,27 @@ function getObjectIndex() {
     return objectCounter++;
 }
 
+function getTextSize (object1)
+{
+
+    var canvas = document.createElement("canvas");
+    var ctx = canvas.getContext("2d");
+    var fontname = object1.css("font-family");
+    var fontsize = object1.css("font-size");
+    ctx.font = fontsize + " " + fontname;
+    var textWidth = ctx.measureText(object1.text()).width;
+    return textWidth;
+
+}
+
 function createObject(objectId, objectIndex){
 
 
-    $("#board").append("<div id='"+ objectId +"' class=''>Objeto " + objectIndex +"</div>");
+    $("#board").append("<div id='"+ objectId +"'></div>");
 
-    $("#" + objectId).addClass("bg-primary");
     $("#" + objectId).addClass("object_textbox");
     $("#" + objectId).draggable({cursor: "move"});
 
-    //$("#status").html(" Top : " + obj.top + ", Left :" + obj.left);
-    //$("#status").append(obj);
-
-//    var obj = new myTextbox(objectName,objectCounter);
 
     return $("#" + objectId);
 
@@ -36,22 +44,54 @@ function myTextbox () {
     this.top = this.domObject.position().top;
     this.left = this.domObject.position().left;
 
-    this.domObject.html("<input type='text' value=''>");
+    this.domObject.append("<input type='text' value=''>");
+    this.domObject.append("<spam></spam>");
+
     var input = this.domObject.find("input").hide();
+    input.addClass("object_input");
+
+    var spam  = this.domObject.find("spam").show();
+    spam.html(this.id);
+
     var superClass = this;
 
     this.domObject.dblclick(function (e) {
 
         input.show();
+        spam.hide();
+
+        superClass.domObject.removeClass("object_textbox").addClass("object_textbox_edit");
+
         input.val(superClass.domObject.text());
     })
     this.domObject.on("keypress",function (e) {
 
-            if (e.keyCode==13)
-            {
-                superClass.domObject.html(input.val());
-                input.hide();
-            }
+
+        if (e.keyCode==13)
+        {
+            superClass.domObject.removeClass("object_textbox_edit").addClass("object_textbox");
+            spam.html(input.val());
+            spam.show();
+            input.hide();
+            textSize = getTextSize(spam);
+
+
+
+            var textSize = 0;
+            console.log(textSize);
+            superClass.domObject.width(textSize);
+            input.width(textSize);
+
+        }
+
+    })
+    this.domObject.on("click",function (e) {
+
+        //destaca o objeto selecionado.
+        if (superClass.domObject.hasClass("object_selected"))
+            superClass.domObject.removeClass("object_selected").addClass("object_unselected");
+        else
+            superClass.domObject.removeClass("object_unselected").addClass("object_selected");
 
     })
 

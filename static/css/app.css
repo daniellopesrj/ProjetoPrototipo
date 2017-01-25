@@ -47,12 +47,40 @@ header {
     width: 180px;
     height: 31px;
     color: black;
-    background-color: #1E8BC3;
+    background-color: #EEEEEE;
     font-family: Verdana;
     border-width: 1px;
     border-radius: 3px;
-    border-color: #0000FF;
-    border-style: dotted;
+    border-color: #000000;
+    border-style: solid;
+    /*word-wrap: break-word;*/
 
+}
+.object_textbox_edit{
+    width: 180px;
+    height: 31px;
+    color: black;
+    background-color: #FFFFFF;
+    font-family: Verdana;
+    border-width: 1px;
+    border-radius: 3px;
+    border-color: #ff0000;
+    border-style: solid;
+}
+.object_input{
+    border-style: none;
+    border-width: 0;
+    font-family: Verdana;
+}
+.object_selected{
+    outline-color: darkblue;
+    outline-style: dotted;
+    outline-width: 2.5px;
+
+}
+.object_unselected{
+    outline-color: darkblue;
+    outline-style: none;
+    outline-width: 0px;
 
 }
