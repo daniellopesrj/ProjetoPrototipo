@@ -20,6 +20,13 @@ function getTextSize (object1)
 
 }
 
+function objectResize(superClass,spam,input)
+{
+    var textSize = getTextSize(spam);
+    superClass.width(textSize);
+    input.width(textSize);
+}
+
 function createObject(objectId, objectIndex){
 
 
@@ -53,34 +60,34 @@ function myTextbox () {
     var spam  = this.domObject.find("spam").show();
     spam.html(this.id);
 
-    var superClass = this;
+    var superClass = this.domObject;
 
     this.domObject.dblclick(function (e) {
 
         input.show();
         spam.hide();
 
-        superClass.domObject.removeClass("object_textbox").addClass("object_textbox_edit");
+        superClass.removeClass("object_textbox").addClass("object_textbox_edit");
 
-        input.val(superClass.domObject.text());
+        input.val(superClass.text());
     })
     this.domObject.on("keypress",function (e) {
 
 
         if (e.keyCode==13)
         {
-            superClass.domObject.removeClass("object_textbox_edit").addClass("object_textbox");
+            superClass.removeClass("object_textbox_edit").addClass("object_textbox");
             spam.html(input.val());
             spam.show();
             input.hide();
-            textSize = getTextSize(spam);
-
-
 
             var textSize = 0;
+            textSize = getTextSize(spam);
             console.log(textSize);
-            superClass.domObject.width(textSize);
+            superClass.width(textSize);
             input.width(textSize);
+
+            objectResize(superClass,spam,input);
 
         }
 
@@ -88,15 +95,13 @@ function myTextbox () {
     this.domObject.on("click",function (e) {
 
         //destaca o objeto selecionado.
-        if (superClass.domObject.hasClass("object_selected"))
-            superClass.domObject.removeClass("object_selected").addClass("object_unselected");
+        if (superClass.hasClass("object_selected"))
+            superClass.removeClass("object_selected").addClass("object_unselected");
         else
-            superClass.domObject.removeClass("object_unselected").addClass("object_selected");
+            superClass.removeClass("object_unselected").addClass("object_selected");
 
     })
-
 }
-
 
 $("#newTextbox").click(function (e) {
 
